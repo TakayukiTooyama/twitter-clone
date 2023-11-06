@@ -41,4 +41,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Retrieve all users from the database.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public static function getAll()
+    {
+        return static::all();
+    }
 }
