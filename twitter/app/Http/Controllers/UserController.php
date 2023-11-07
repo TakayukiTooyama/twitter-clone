@@ -37,4 +37,17 @@ class UserController extends Controller
         $users = $this->user->getAll();
         return view('user.index', compact('users'));
     }
+
+    /**
+     * ユーザー詳細を取得し、表示する
+     *
+     * @param int $id
+     *
+     * @return View
+     */
+    public function show(int $id): View
+    {
+        $user = $this->user->findByUserId($id);
+        return view('user.show', compact('user'));
+    }
 }
