@@ -29,5 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'users', 'as' => 'users'], function () {
         // ユーザー一覧
         Route::get('/', [UserController::class, 'index'])->name('.index');
+        // ユーザー詳細
+        Route::get('/{id}', [UserController::class, 'show'])->name('.show');
     });
 });

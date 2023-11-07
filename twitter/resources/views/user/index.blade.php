@@ -5,7 +5,9 @@
         <h1>ユーザー一覧</h1>
         <ul>
             @foreach ($users as $user)
-                <li>{{ $user->name }}</li>
+                <a href={{ route('users.show', ['id' => $user->id]) }}>
+                    <li>{{ $user->name }}</li>
+                </a>
             @endforeach
         </ul>
     </div>
