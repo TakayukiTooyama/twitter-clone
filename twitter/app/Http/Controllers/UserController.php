@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use \Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -41,13 +42,16 @@ class UserController extends Controller
     /**
      * ユーザー詳細を取得し、表示する
      *
-     * @param int $id
+     * @param int $userId
      *
-     * @return View
+     * @return View|RedirectResponse
      */
-    public function show(int $id): View
+    public function show(int $userId): View|RedirectResponse
     {
-        $user = $this->user->findByUserId($id);
+        $user = $this->user->findByUserId($userId);
+        if (!$user) {
+            return redirect()->route('users.index')->with('error', 'User not found');
+        }
         return view('user.show', compact('user'));
     }
 }

@@ -56,12 +56,12 @@ class User extends Authenticatable
     /**
      * ユーザー詳細を取得する
      *
-     * @param int $id
+     * @param int $userId
      *
-     * @return User
+     * @return User|null
      */
-    public function findByUserId(int $id): User
+    public function findByUserId(int $userId): User|null
     {
-        return User::find($id);
+        return User::find($userId);
     }
 }
