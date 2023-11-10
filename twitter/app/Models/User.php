@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -73,6 +74,16 @@ class User extends Authenticatable
      */
     public function userInfoUpdate(array $validatedUserInfo): bool
     {
-        return auth()->user()->update($validatedUserInfo);
+        return Auth::user()->update($validatedUserInfo);
+    }
+
+    /**
+     * ユーザーを削除する
+     *
+     * @return bool
+     */
+    public function userDelete(): bool
+    {
+        return Auth::user()->delete();
     }
 }

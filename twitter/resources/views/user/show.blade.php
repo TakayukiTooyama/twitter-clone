@@ -27,11 +27,17 @@
                         <x-form.input-password label="新しいパスワードの確認" name="password_confirmation"
                             iconId="togglePasswordConfirmationIcon" />
 
-                        {{-- 更新ボタン --}}
-                        <button type="submit" class="btn btn-primary">更新</button>
+                        <div class="d-flex justify-content-between align-items-center">
+                            {{-- 更新ボタン --}}
+                            <button type="submit" class="btn btn-primary">更新</button>
+                            {{-- 削除モーダルボタン --}}
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal">削除</button>
+                        </div>
                     </form>
                 </div>
             </div>
+            <x-modal.delete-modal :user="$user" />
         @else
             <div>
                 <div class="card">
