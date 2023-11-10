@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -53,5 +56,32 @@ class UserController extends Controller
             return redirect()->route('users.index')->with('error', 'User not found');
         }
         return view('user.show', compact('user'));
+    }
+
+    /**
+     * ユーザー情報を更新する
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse
+     */
+    public function update(UserUpdateRequest $request): RedirectResponse
+    {
+        // リクエストの取得
+        $validatedUserInfo = $request->only(['name', 'email', 'password']);
+
+        // パスワードが提供されている場合のみ更新、そうでなければ配列から削除
+        if (!empty($validatedUserInfo['password'])) {
+            $validatedUserInfo['password'] = Hash::make($validatedUserInfo['password']);
+        } else {
+            unset($validatedUserInfo['password']);
+        }
+
+        // ユーザー情報の更新
+        $isUpdated = $this->user->userInfoUpdate($validatedUserInfo);
+
+        return $isUpdated
+            ? back()->with('success', 'ユーザー情報を更新しました。')
+            : back()->with('error', 'ユーザー情報に失敗しました。');
     }
 }
