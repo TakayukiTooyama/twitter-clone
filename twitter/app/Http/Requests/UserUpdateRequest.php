@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends FormRequest
@@ -24,11 +25,9 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $userId = $this->route('id');
-
         return [
-            'name' => ['required', 'string', 'max:20', Rule::unique('users')->ignore($userId)],
-            'email' => ['required', 'email', 'email:dns', 'email:spoof', 'max:256', Rule::unique('users')->ignore($userId)],
+            'name' => ['required', 'string', 'max:20', Rule::unique('users')->ignore(Auth::id())],
+            'email' => ['required', 'email', 'email:dns', 'email:spoof', 'max:256', Rule::unique('users')->ignore(Auth::id())],
             'password' => ['nullable', 'string', 'between:8,24', 'confirmed'],
         ];
     }
@@ -44,6 +43,7 @@ class UserUpdateRequest extends FormRequest
             'name.required' => '名前を入力してください',
             'name.string' => '有効な形式で入力してください',
             'name.max' => '20文字以下で入力してください',
+            'name.unique' => 'その名前はすでに使用されています',
 
             'email.required' => 'メールアドレスを入力してください',
             'email.email' => '有効なメールアドレスをご利用ください',
