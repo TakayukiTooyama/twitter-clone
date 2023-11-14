@@ -39,13 +39,11 @@
             </div>
             <x-modal.delete-modal :user="$user" />
         @else
-            <div>
-                <div class="card">
-                    <div class="card-body">
-                        <h1 class="card-title">ユーザー詳細</h1>
-                        <p class="mb-0">【Name】 {{ $user->name }}</p>
-                        <p>【Email】 {{ $user->email }}</p>
-                    </div>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="card-title">ユーザー詳細</h1>
+                    <p class="mb-0">【Name】 {{ $user->name }}</p>
+                    <p>【Email】 {{ $user->email }}</p>
                 </div>
             </div>
         @endif
