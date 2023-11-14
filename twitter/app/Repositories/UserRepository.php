@@ -41,4 +41,15 @@ class UserRepository
     {
         User::where('id', $userId)->update($userInfo);
     }
+    /**
+     * ユーザー削除
+     *
+     * @param int $userId
+     *
+     * @return bool
+     */
+    public function delete(int $userId): bool
+    {
+        return User::where('id', $userId)->delete();
+    }
 }
