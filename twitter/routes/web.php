@@ -43,5 +43,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('tweet')->name('tweet')->group(function () {
         Route::get('/', [TweetController::class, 'index'])->name('.index');
         Route::post('/', [TweetController::class, 'create'])->name('.create');
+        Route::get('/{id}', [TweetController::class, 'show'])->name('.show');
+        Route::put('/{id}', [TweetController::class, 'update'])->name('.update');
+        Route::delete('/{id}', [TweetController::class, 'delete'])->name('.delete');
     });
 });

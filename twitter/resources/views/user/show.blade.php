@@ -37,7 +37,7 @@
                     </form>
                 </div>
             </div>
-            <x-modal.delete-modal :user="$user" />
+            <x-modal.delete-modal label="ユーザー" route="users.delete" :id="$user->id" />
         @else
             <div class="card">
                 <div class="card-body">
