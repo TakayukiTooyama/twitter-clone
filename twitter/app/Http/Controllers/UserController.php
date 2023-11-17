@@ -74,7 +74,7 @@ class UserController extends Controller
             $this->userService->deleteUser(Auth::id());
             return redirect()->route('login')->with('success', 'ユーザーを削除しました。');
         } catch (\Exception $e) {
-            return redirect()->route('users.index')->with('error', 'ユーザーの削除に失敗しました。');
+            return back()->with('error', 'ユーザーの削除に失敗しました。' . $e->getMessage());
         }
     }
 }

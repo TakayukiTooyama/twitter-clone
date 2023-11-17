@@ -70,7 +70,8 @@ class UserService
      * @param int $userId
      *
      * @return bool
-     */ public function deleteUser(int $userId): void
+     */
+    public function deleteUser(int $userId): void
     {
         $userRepository = new UserRepository();
         $userRepository->delete($userId);

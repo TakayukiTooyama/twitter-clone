@@ -46,10 +46,10 @@ class UserRepository
      *
      * @param int $userId
      *
-     * @return bool
+     * @return void
      */
-    public function delete(int $userId): bool
+    public function delete(int $userId): void
     {
-        return User::where('id', $userId)->delete();
+        User::where('id', $userId)->delete();
     }
 }
