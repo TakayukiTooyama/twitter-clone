@@ -17,19 +17,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 // ユーザー認証
-Route::group(['middleware' => 'auth'], function () {
+Route::middleware('auth')->group(function () {
     // ユーザー機能
-    Route::group(['prefix' => 'users', 'as' => 'users'], function () {
+    Route::prefix('users')->name('users')->group(function () {
         // ユーザー一覧
         Route::get('/', [UserController::class, 'index'])->name('.index');
         // ユーザー詳細
         Route::get('/{id}', [UserController::class, 'show'])->name('.show');
+        // ユーザー情報更新
+        Route::put('/{id}', [UserController::class, 'update'])->name('.update');
     });
 });

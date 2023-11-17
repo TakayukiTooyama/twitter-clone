@@ -2,31 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Http\Requests\UserUpdateRequest;
+use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    protected $userService;
 
-    /**
-     * Userモデルのインスタンス
-     *
-     * @var User
-     */
-    protected $user;
-
-    /**
-     * 新しいコントローラインスタンスの生成
-     *
-     * @param User $user
-     *
-     * @return void
-     */
-    public function __construct(User $user)
+    public function __construct(UserService $userService)
     {
-        $this->user = $user;
+        $this->userService = $userService;
     }
+
 
     /**
      * ユーザー一覧を取得し、表示する
@@ -35,7 +25,7 @@ class UserController extends Controller
      */
     public function index(): View
     {
-        $users = $this->user->getAll();
+        $users = $this->userService->getAllUser();
         return view('user.index', compact('users'));
     }
 
@@ -48,10 +38,28 @@ class UserController extends Controller
      */
     public function show(int $userId): View|RedirectResponse
     {
-        $user = $this->user->findByUserId($userId);
+        $user = $this->userService->findUserById($userId);
         if (!$user) {
             return redirect()->route('users.index')->with('error', 'User not found');
         }
         return view('user.show', compact('user'));
+    }
+
+    /**
+     * ユーザー情報を更新する
+     *
+     * @param UserUpdateRequest $request
+     *
+     * @return RedirectResponse
+     */
+    public function update(UserUpdateRequest $request): RedirectResponse
+    {
+        try {
+            $this->userService->updateUserInfo(Auth::id(), $request->validated());
+
+            return back()->with('success', 'ユーザー情報を更新しました。');
+        } catch (\Exception $e) {
+            return back()->with('error', 'ユーザー情報の更新に失敗しました: ' . $e->getMessage());
+        }
     }
 }

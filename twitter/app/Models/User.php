@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -42,26 +40,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
-    /**
-     * ユーザー一覧を取得する
-     *
-     * @return Collection
-     */
-    public function getAll(): Collection
-    {
-        return User::all();
-    }
-
-    /**
-     * ユーザー詳細を取得する
-     *
-     * @param int $userId
-     *
-     * @return User|null
-     */
-    public function findByUserId(int $userId): User|null
-    {
-        return User::find($userId);
-    }
 }
