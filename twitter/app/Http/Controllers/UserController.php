@@ -62,4 +62,19 @@ class UserController extends Controller
             return back()->with('error', 'ユーザー情報の更新に失敗しました: ' . $e->getMessage());
         }
     }
+
+    /**
+     *  ユーザーを削除する
+     *
+     * @return RedirectResponse
+     */
+    public function delete(): RedirectResponse
+    {
+        try {
+            $this->userService->deleteUser(Auth::id());
+            return redirect()->route('login')->with('success', 'ユーザーを削除しました。');
+        } catch (\Exception $e) {
+            return back()->with('error', 'ユーザーの削除に失敗しました。' . $e->getMessage());
+        }
+    }
 }

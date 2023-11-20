@@ -63,4 +63,17 @@ class UserService
         $userRepository = new UserRepository();
         $userRepository->update($userId, $userInfo);
     }
+
+    /**
+     * ユーザー削除
+     *
+     * @param int $userId
+     *
+     * @return bool
+     */
+    public function deleteUser(int $userId): void
+    {
+        $userRepository = new UserRepository();
+        $userRepository->delete($userId);
+    }
 }
