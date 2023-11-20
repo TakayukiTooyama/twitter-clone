@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Tweet;
 use App\Repositories\TweetRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class TweetService
@@ -17,6 +18,17 @@ class TweetService
     public function checkTweetOwner(Tweet $tweet)
     {
         return $tweet->user_id === Auth::id();
+    }
+
+    /**
+     * ツイート一覧取得
+     *
+     * @return Collection
+     */
+    public function getAllTweet(): Collection
+    {
+        $tweetRepository = new TweetRepository();
+        return $tweetRepository->findAll();
     }
 
 

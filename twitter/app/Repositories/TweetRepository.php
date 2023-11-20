@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Auth;
 class TweetRepository
 {
     /**
+     * ツイート一覧取得
+     *
+     * @return Collection
+     */
+    public function findAll(): Collection
+    {
+        return Tweet::orderBy('created_at', 'desc')->get();
+    }
+
+    /**
      * ツイート作成
      *
      * @param string $content

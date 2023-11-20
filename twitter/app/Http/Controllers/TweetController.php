@@ -23,9 +23,9 @@ class TweetController extends Controller
      */
     public function index(): View
     {
-        return view('tweet.index');
+        $tweets = $this->tweetService->getAllTweet();
+        return view('tweet.index', compact('tweets'));
     }
-
 
     /**
      * ツイートの作成
