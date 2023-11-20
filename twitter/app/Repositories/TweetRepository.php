@@ -20,6 +20,18 @@ class TweetRepository
     }
 
     /**
+     * ツイートIDからツイートを取得
+     *
+     * @param int $tweetId
+     *
+     * @return Tweet
+     */
+    public function findById(int $tweetId): Tweet
+    {
+        return Tweet::find($tweetId);
+    }
+
+    /**
      * ツイート作成
      *
      * @param string $content
@@ -32,5 +44,18 @@ class TweetRepository
             'user_id' => Auth::id(),
             'content' => $content,
         ]);
+    }
+
+    /**
+     * ツイート更新
+     *
+     * @param int $tweetId
+     * @param string $content
+     *
+     * @return void
+     */
+    public function update(int $tweetId, string $content): void
+    {
+        Tweet::where('id', $tweetId)->update(['content' => $content]);
     }
 }

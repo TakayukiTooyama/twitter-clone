@@ -45,5 +45,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [TweetController::class, 'index'])->name('.index');
         // ツイート投稿
         Route::post('/', [TweetController::class, 'create'])->name('.create');
+        // ツイート詳細
+        Route::get('/{id}', [TweetController::class, 'show'])->name('.show');
+        // ツイート更新
+        Route::put('/{id}', [TweetController::class, 'update'])->name('.update');
     });
 });

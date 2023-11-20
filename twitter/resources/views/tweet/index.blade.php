@@ -15,17 +15,19 @@
         </div>
         <div class="border border-bottom-0">
             @foreach ($tweets as $tweet)
-                <div class="d-flex border-bottom p-3">
-                    <img src={{ asset('image/noicon.png') }}
-                        style="width: 80px; height: 80px; margin-right: 8px; border-radius: 100%;">
-                    <div>
-                        <p class="fw-semibold m-0 mb-2">{{ $tweet->user->name }}</p>
-                        <p class="mb-2">
-                            {{ $tweet->content }}
-                        </p>
+                <a href={{ route('tweet.show', ['id' => $tweet->id]) }} class="text-reset text-decoration-none">
+                    <div class="d-flex border-bottom p-3">
+                        <img src={{ asset('image/noicon.png') }}
+                            style="width: 80px; height: 80px; margin-right: 8px; border-radius: 100%;">
+                        <div>
+                            <p class="fw-semibold m-0 mb-2">{{ $tweet->user->name }}</p>
+                            <p class="mb-2">
+                                {{ $tweet->content }}
+                            </p>
+                        </div>
                     </div>
-                </div>
             @endforeach
+            </a>
         </div>
     </div>
 </x-layout>

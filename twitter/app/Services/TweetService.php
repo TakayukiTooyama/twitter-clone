@@ -31,6 +31,18 @@ class TweetService
         return $tweetRepository->findAll();
     }
 
+    /**
+     * ツイートIDからツイートを取得
+     *
+     * @param int $tweetId
+     *
+     * @return Tweet
+     */
+    public function findTweetById(int $tweetId): Tweet
+    {
+        $tweetRepository = new TweetRepository();
+        return $tweetRepository->findById($tweetId);
+    }
 
     /**
      * ツイート作成
@@ -44,5 +56,20 @@ class TweetService
         $content = $tweet['content'];
         $tweetRepository = new TweetRepository();
         $tweetRepository->create($content);
+    }
+
+    /**
+     * ツイート更新
+     *
+     * @param int $tweetId
+     * @param array $tweet
+     *
+     * @return void
+     */
+    public function updateTweet(int $tweetId, array $tweet): void
+    {
+        $content = $tweet['content'];
+        $tweetRepository = new TweetRepository();
+        $tweetRepository->update($tweetId, $content);
     }
 }
