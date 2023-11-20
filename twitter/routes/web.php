@@ -49,5 +49,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', [TweetController::class, 'show'])->name('.show');
         // ツイート更新
         Route::put('/{id}', [TweetController::class, 'update'])->name('.update');
+        // ツイート削除
+        Route::delete('/{id}', [TweetController::class, 'delete'])->name('.delete');
     });
 });

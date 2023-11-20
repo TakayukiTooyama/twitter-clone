@@ -28,12 +28,15 @@
                     @if (auth()->id() == $tweet->user_id)
                         <div class="d-flex justify-content-between align-items-center mt-2">
                             <button type="submit" class="btn btn-primary">更新</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal">削除</button>
                         </div>
                     @endif
                 </div>
             </div>
         </form>
         <x-modal.success-modal />
+        <x-modal.delete-modal label="ツイート" route="tweet.delete" :id="$tweet->id" />
     </div>
     @push('body-scripts')
         <script src={{ asset('js/alert.js') }}></script>

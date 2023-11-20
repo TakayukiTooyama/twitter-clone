@@ -58,4 +58,16 @@ class TweetRepository
     {
         Tweet::where('id', $tweetId)->update(['content' => $content]);
     }
+
+    /**
+     * ツイート削除
+     *
+     * @param int $tweetId
+     *
+     * @return void
+     */
+    public function delete(int $tweetId): void
+    {
+        Tweet::where('id', $tweetId)->delete();
+    }
 }

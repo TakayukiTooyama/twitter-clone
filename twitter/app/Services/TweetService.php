@@ -72,4 +72,17 @@ class TweetService
         $tweetRepository = new TweetRepository();
         $tweetRepository->update($tweetId, $content);
     }
+
+    /**
+     * ツイート削除
+     *
+     * @param int $tweetId
+     *
+     * @return void
+     */
+    public function deleteTweet(int $tweetId): void
+    {
+        $tweetRepository = new TweetRepository();
+        $tweetRepository->delete($tweetId);
+    }
 }
