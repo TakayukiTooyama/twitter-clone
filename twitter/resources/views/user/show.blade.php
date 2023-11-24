@@ -18,7 +18,7 @@
                         <x-form.input-text label="名前" name="name" :value="$user->name" required />
 
                         {{-- メールアドレス入力フィールド --}}
-                        <x-form.input-text label="メールアドレス" type="email" name="email" :value="$user->email" />
+                        <x-form.input-text label="メールアドレス" type="email" name="email" :value="$user->email" required />
 
                         <!-- パスワードフィールド -->
                         <x-form.input-password label="パスワード" name="password" iconId="togglePasswordIcon" />
