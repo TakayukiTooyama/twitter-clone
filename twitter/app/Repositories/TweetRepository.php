@@ -24,9 +24,9 @@ class TweetRepository
      *
      * @param int $tweetId
      *
-     * @return Tweet
+     * @return Tweet|null
      */
-    public function findById(int $tweetId): Tweet
+    public function findById(int $tweetId): ?Tweet
     {
         return Tweet::find($tweetId);
     }

@@ -36,9 +36,9 @@ class TweetService
      *
      * @param int $tweetId
      *
-     * @return Tweet
+     * @return Tweet|null
      */
-    public function findTweetById(int $tweetId): Tweet
+    public function findTweetById(int $tweetId): ?Tweet
     {
         $tweetRepository = new TweetRepository();
         return $tweetRepository->findById($tweetId);
