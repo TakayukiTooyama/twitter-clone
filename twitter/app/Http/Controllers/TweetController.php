@@ -72,10 +72,9 @@ class TweetController extends Controller
      *
      * @return RedirectResponse
      */
-    public function update(TweetRequest $request, int $tweetId)
+    public function update(TweetRequest $request, int $tweetId): RedirectResponse
     {
         try {
-            // ツイートの取得
             $tweet = $this->tweetService->findTweetById($tweetId);
             if (!$tweet) {
                 return back()->with('error', '更新するツイートが存在しません。');
