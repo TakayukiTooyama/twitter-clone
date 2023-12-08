@@ -7,6 +7,7 @@ use App\Services\TweetService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class TweetController extends Controller
 {
@@ -58,6 +59,7 @@ class TweetController extends Controller
             $this->tweetService->createTweet($request->validated());
             return back()->route('tweet.index');
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return back()->with('error', 'ツイートの投稿に失敗しました。');
         }
     }
@@ -84,6 +86,7 @@ class TweetController extends Controller
             $this->tweetService->updateTweet($tweetId, $request->validated());
             return back()->with('success', 'ツイートが更新されました');
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return back()->with('error', 'ツイートの更新に失敗しました。');
         }
     }
