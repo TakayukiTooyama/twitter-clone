@@ -6,6 +6,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -59,7 +60,24 @@ class UserController extends Controller
 
             return back()->with('success', 'ユーザー情報を更新しました。');
         } catch (\Exception $e) {
-            return back()->with('error', 'ユーザー情報の更新に失敗しました: ' . $e->getMessage());
+            Log::error($e->getMessage());
+            return back()->with('error', 'ユーザー情報の更新に失敗しました: ');
+        }
+    }
+
+    /**
+     *  ユーザーを削除する
+     *
+     * @return RedirectResponse
+     */
+    public function delete(): RedirectResponse
+    {
+        try {
+            $this->userService->deleteUser(Auth::id());
+            return redirect()->route('login')->with('success', 'ユーザーを削除しました。');
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return back()->with('error', 'ユーザーの削除に失敗しました。');
         }
     }
 }

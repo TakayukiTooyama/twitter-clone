@@ -35,5 +35,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', [UserController::class, 'show'])->name('.show');
         // ユーザー情報更新
         Route::put('/{id}', [UserController::class, 'update'])->name('.update');
+        // ユーザー削除
+        Route::delete('/{id}', [UserController::class, 'delete'])->name('.delete');
     });
 });
