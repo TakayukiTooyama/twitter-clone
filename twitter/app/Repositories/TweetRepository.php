@@ -24,7 +24,7 @@ class TweetRepository
      *
      * @param int $tweetId
      *
-     * @return Tweet|null
+     * @return ?Tweet
      */
     public function findById(int $tweetId): ?Tweet
     {

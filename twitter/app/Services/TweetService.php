@@ -13,9 +13,10 @@ class TweetService
      * ツイートの存在と所有者をチェックする。
      *
      * @param Tweet $tweet
+     *
      * @return bool
      */
-    public function checkTweetOwner(Tweet $tweet)
+    public function checkTweetOwner(Tweet $tweet): bool
     {
         return $tweet->user_id === Auth::id();
     }
@@ -36,7 +37,7 @@ class TweetService
      *
      * @param int $tweetId
      *
-     * @return Tweet|null
+     * @return ?Tweet
      */
     public function findTweetById(int $tweetId): ?Tweet
     {

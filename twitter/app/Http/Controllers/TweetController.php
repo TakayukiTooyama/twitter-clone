@@ -36,7 +36,7 @@ class TweetController extends Controller
      *
      * @return View|RedirectResponse
      */
-    public function show($tweetId): View|RedirectResponse
+    public function show(int $tweetId): View|RedirectResponse
     {
         $tweet = $this->tweetService->findTweetById($tweetId);
         if (!$tweet) {
