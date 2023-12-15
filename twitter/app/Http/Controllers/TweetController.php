@@ -86,7 +86,6 @@ class TweetController extends Controller
             $this->tweetService->updateTweet($tweetId, $content);
             return back()->with('success', 'ツイートが更新されました');
         } catch (AuthorizationException $e) {
-            Log::error($e->getMessage());
             return back()->with('error', '認証されていないユーザーが更新しようとしました。');
         } catch (\Exception $e) {
             Log::error($e->getMessage());

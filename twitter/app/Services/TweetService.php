@@ -12,7 +12,7 @@ class TweetService
 
     public function __construct(TweetRepository $tweetRepository)
     {
-        $this->$tweetRepository = $tweetRepository;
+        $this->tweetRepository = $tweetRepository;
     }
 
     /**
