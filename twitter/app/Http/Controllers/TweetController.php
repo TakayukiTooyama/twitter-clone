@@ -99,21 +99,20 @@ class TweetController extends Controller
      * @param int $tweetId
      *
      * @return RedirectResponse
-     */ public function delete(int $tweetId)
+     */ public function delete(int $tweetId): RedirectResponse
     {
         try {
-            // ツイートの取得
             $tweet = $this->tweetService->findTweetById($tweetId);
             if (!$tweet) {
                 return back()->with('error', '削除するツイートが存在しません。');
             }
-            if ($tweet->user_id !== Auth::id()) {
-                return back()->with('error', '認証されていないユーザーが削除しようとしました。');
-            }
-            // ツイートの削除
+            $this->authorize('delete', $tweet);
             $this->tweetService->deleteTweet($tweetId);
             return redirect()->route('tweet.index')->with('success', 'ツイートを削除しました。');
+        } catch (AuthorizationException $e) {
+            return back()->with('error', '認証されていないユーザーが削除しようとしました。');
         } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return back()->with('error', 'ツイートの削除に失敗しました。');
         }
     }

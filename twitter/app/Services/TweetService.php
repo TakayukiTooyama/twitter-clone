@@ -72,7 +72,6 @@ class TweetService
      */
     public function deleteTweet(int $tweetId): void
     {
-        $tweetRepository = new TweetRepository();
-        $tweetRepository->delete($tweetId);
+        $this->tweetRepository->delete($tweetId);
     }
 }

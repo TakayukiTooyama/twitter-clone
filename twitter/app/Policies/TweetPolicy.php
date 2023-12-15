@@ -22,4 +22,17 @@ class TweetPolicy
     {
         return $user->id === $tweet->user_id;
     }
+
+    /**
+     * ツイート削除の認可
+     *
+     * @param  User  $user
+     * @param  Tweet  $tweet
+     *
+     * @return bool
+     */
+    public function delete(User $user, Tweet $tweet)
+    {
+        return $user->id === $tweet->user_id;
+    }
 }
