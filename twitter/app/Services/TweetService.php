@@ -5,10 +5,16 @@ namespace App\Services;
 use App\Models\Tweet;
 use App\Repositories\TweetRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class TweetService
 {
+    protected $tweetRepository;
+
+    public function __construct(TweetRepository $tweetRepository)
+    {
+        $this->$tweetRepository = $tweetRepository;
+    }
+
     /**
      * ツイート一覧取得
      *
@@ -16,8 +22,7 @@ class TweetService
      */
     public function getAllTweet(): Collection
     {
-        $tweetRepository = new TweetRepository();
-        return $tweetRepository->findAll();
+        return $this->tweetRepository->findAll();
     }
 
     /**
@@ -29,8 +34,7 @@ class TweetService
      */
     public function findTweetById(int $tweetId): ?Tweet
     {
-        $tweetRepository = new TweetRepository();
-        return $tweetRepository->findById($tweetId);
+        return $this->tweetRepository->findById($tweetId);
     }
 
     /**
@@ -43,8 +47,7 @@ class TweetService
      */
     public function createTweet(int $userId, string $content): void
     {
-        $tweetRepository = new TweetRepository();
-        $tweetRepository->create($userId, $content);
+        $this->tweetRepository->create($userId, $content);
     }
 
     /**
@@ -57,7 +60,6 @@ class TweetService
      */
     public function updateTweet(int $tweetId, string $content): void
     {
-        $tweetRepository = new TweetRepository();
-        $tweetRepository->update($tweetId, $content);
+        $this->tweetRepository->update($tweetId, $content);
     }
 }
