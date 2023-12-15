@@ -10,18 +10,6 @@ use Illuminate\Support\Facades\Auth;
 class TweetService
 {
     /**
-     * ツイートの存在と所有者をチェックする。
-     *
-     * @param Tweet $tweet
-     *
-     * @return bool
-     */
-    public function checkTweetOwner(Tweet $tweet): bool
-    {
-        return $tweet->user_id === Auth::id();
-    }
-
-    /**
      * ツイート一覧取得
      *
      * @return Collection

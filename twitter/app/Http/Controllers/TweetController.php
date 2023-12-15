@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TweetRequest;
 use App\Services\TweetService;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -80,12 +81,13 @@ class TweetController extends Controller
             if (!$tweet) {
                 return back()->with('error', '更新するツイートが存在しません。');
             }
-            if ($tweet->user_id !== Auth::id()) {
-                return back()->with('error', '認証されていないユーザーが更新しようとしました。');
-            }
+            $this->authorize('update', $tweet);
             $content = $request->validated()['content'];
             $this->tweetService->updateTweet($tweetId, $content);
             return back()->with('success', 'ツイートが更新されました');
+        } catch (AuthorizationException $e) {
+            Log::error($e->getMessage());
+            return back()->with('error', '認証されていないユーザーが更新しようとしました。');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return back()->with('error', 'ツイートの更新に失敗しました。');
