@@ -5,19 +5,14 @@ namespace App\Services;
 use App\Models\Tweet;
 use App\Repositories\TweetRepository;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 class TweetService
 {
-    /**
-     * ツイートの存在と所有者をチェックする。
-     *
-     * @param Tweet $tweet
-     * @return bool
-     */
-    public function checkTweetOwner(Tweet $tweet)
+    protected $tweetRepository;
+
+    public function __construct(TweetRepository $tweetRepository)
     {
-        return $tweet->user_id === Auth::id();
+        $this->tweetRepository = $tweetRepository;
     }
 
     /**
@@ -27,8 +22,7 @@ class TweetService
      */
     public function getAllTweet(): Collection
     {
-        $tweetRepository = new TweetRepository();
-        return $tweetRepository->findAll();
+        return $this->tweetRepository->findAll();
     }
 
     /**
@@ -36,41 +30,37 @@ class TweetService
      *
      * @param int $tweetId
      *
-     * @return Tweet
+     * @return ?Tweet
      */
-    public function findTweetById(int $tweetId): Tweet
+    public function findTweetById(int $tweetId): ?Tweet
     {
-        $tweetRepository = new TweetRepository();
-        return $tweetRepository->findById($tweetId);
+        return $this->tweetRepository->findById($tweetId);
     }
 
     /**
      * ツイート作成
      *
-     * @param array $tweet
+     * @param int $userId
+     * @param string $content
      *
      * @return void
      */
-    public function createTweet(array $tweet): void
+    public function createTweet(int $userId, string $content): void
     {
-        $content = $tweet['content'];
-        $tweetRepository = new TweetRepository();
-        $tweetRepository->create($content);
+        $this->tweetRepository->create($userId, $content);
     }
 
     /**
      * ツイート更新
      *
      * @param int $tweetId
-     * @param array $tweet
+     * @param string $content
      *
      * @return void
      */
-    public function updateTweet(int $tweetId, array $tweet): void
+    public function updateTweet(int $tweetId, string $content): void
     {
-        $content = $tweet['content'];
-        $tweetRepository = new TweetRepository();
-        $tweetRepository->update($tweetId, $content);
+        $this->tweetRepository->update($tweetId, $content);
     }
 
     /**

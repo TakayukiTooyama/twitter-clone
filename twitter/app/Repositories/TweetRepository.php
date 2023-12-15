@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Tweet;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 
 
 class TweetRepository
@@ -24,9 +23,9 @@ class TweetRepository
      *
      * @param int $tweetId
      *
-     * @return Tweet
+     * @return ?Tweet
      */
-    public function findById(int $tweetId): Tweet
+    public function findById(int $tweetId): ?Tweet
     {
         return Tweet::find($tweetId);
     }
@@ -34,14 +33,15 @@ class TweetRepository
     /**
      * ツイート作成
      *
+     * @param int $userId
      * @param string $content
      *
      * @return void
      */
-    public function create(string $content): void
+    public function create(int $userId, string $content): void
     {
         Tweet::create([
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'content' => $content,
         ]);
     }
