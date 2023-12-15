@@ -34,14 +34,15 @@ class TweetRepository
     /**
      * ツイート作成
      *
+     * @param int $userId
      * @param string $content
      *
      * @return void
      */
-    public function create(string $content): void
+    public function create(int $userId, string $content): void
     {
         Tweet::create([
-            'user_id' => Auth::id(),
+            'user_id' => $userId,
             'content' => $content,
         ]);
     }

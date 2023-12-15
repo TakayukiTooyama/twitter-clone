@@ -48,28 +48,27 @@ class TweetService
     /**
      * ツイート作成
      *
-     * @param array $tweet
+     * @param int $userId
+     * @param string $content
      *
      * @return void
      */
-    public function createTweet(array $tweet): void
+    public function createTweet(int $userId, string $content): void
     {
-        $content = $tweet['content'];
         $tweetRepository = new TweetRepository();
-        $tweetRepository->create($content);
+        $tweetRepository->create($userId, $content);
     }
 
     /**
      * ツイート更新
      *
      * @param int $tweetId
-     * @param array $tweet
+     * @param string $content
      *
      * @return void
      */
-    public function updateTweet(int $tweetId, array $tweet): void
+    public function updateTweet(int $tweetId, string $content): void
     {
-        $content = $tweet['content'];
         $tweetRepository = new TweetRepository();
         $tweetRepository->update($tweetId, $content);
     }

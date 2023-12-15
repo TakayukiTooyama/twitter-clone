@@ -56,7 +56,8 @@ class TweetController extends Controller
     public function create(TweetRequest $request): RedirectResponse
     {
         try {
-            $this->tweetService->createTweet($request->validated());
+            $content = $request->validated()['content'];
+            $this->tweetService->createTweet(Auth::id(), $content);
             return back()->route('tweet.index');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -82,7 +83,8 @@ class TweetController extends Controller
             if ($tweet->user_id !== Auth::id()) {
                 return back()->with('error', '認証されていないユーザーが更新しようとしました。');
             }
-            $this->tweetService->updateTweet($tweetId, $request->validated());
+            $content = $request->validated()['content'];
+            $this->tweetService->updateTweet($tweetId, $content);
             return back()->with('success', 'ツイートが更新されました');
         } catch (\Exception $e) {
             Log::error($e->getMessage());
