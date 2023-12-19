@@ -1,11 +1,5 @@
 <x-layout>
     <div class="container mt-5">
-        @if (session('success'))
-            <div id="alert-success" class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
         @if (auth()->id() == $user->id)
             <div class="card">
                 <div class="card-body">
@@ -50,8 +44,9 @@
             </div>
         @endif
     </div>
-
+    <x-modal.success-modal />
     @push('body-scripts')
         <script src={{ asset('js/user-form.js') }}></script>
+        <script src={{ asset('js/alert.js') }}></script>
     @endpush
 </x-layout>

@@ -37,7 +37,7 @@ class UserService
      *
      * @param int $userId
      *
-     * @return User|null
+     * @return ?User
      */
     public function findUserById(int $userId): ?User
     {

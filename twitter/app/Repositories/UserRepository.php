@@ -22,7 +22,7 @@ class UserRepository
      *
      * @param int $userId
      *
-     * @return User|null
+     * @return ?User
      */
     public function findById(int $userId): ?User
     {
