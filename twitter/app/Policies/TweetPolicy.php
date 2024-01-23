@@ -18,7 +18,7 @@ class TweetPolicy
      *
      * @return bool
      */
-    public function update(User $user, Tweet $tweet)
+    public function update(User $user, Tweet $tweet): bool
     {
         return $user->id === $tweet->user_id;
     }
@@ -31,7 +31,7 @@ class TweetPolicy
      *
      * @return bool
      */
-    public function delete(User $user, Tweet $tweet)
+    public function delete(User $user, Tweet $tweet): bool
     {
         return $user->id === $tweet->user_id;
     }
