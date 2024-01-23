@@ -18,7 +18,20 @@ class TweetPolicy
      *
      * @return bool
      */
-    public function update(User $user, Tweet $tweet)
+    public function update(User $user, Tweet $tweet): bool
+    {
+        return $user->id === $tweet->user_id;
+    }
+
+    /**
+     * ツイート削除の認可
+     *
+     * @param  User  $user
+     * @param  Tweet  $tweet
+     *
+     * @return bool
+     */
+    public function delete(User $user, Tweet $tweet): bool
     {
         return $user->id === $tweet->user_id;
     }
