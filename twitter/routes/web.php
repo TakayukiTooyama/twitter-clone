@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
@@ -38,7 +39,16 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [UserController::class, 'update'])->name('.update');
         // ユーザー削除
         Route::delete('/{id}', [UserController::class, 'delete'])->name('.delete');
+
+        // フォロー機能
+        Route::prefix('follow')->group(function () {
+            // ユーザーフォーロー
+            Route::put('/{id}', [FollowerController::class, 'follow'])->name('.follow');
+            // // ユーザーフォロー解除
+            Route::delete('/{id}', [FollowerController::class, 'unfollow'])->name('.unfollow');
+        });
     });
+
     // ツイート機能
     Route::prefix('tweet')->name('tweet')->group(function () {
         // ツイート一覧

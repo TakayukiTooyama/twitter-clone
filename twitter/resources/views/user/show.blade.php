@@ -1,5 +1,8 @@
 <x-layout>
     <div class="container mt-5">
+        <a href={{ route('users.index') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
+            <i class="fas fa-chevron-left"></i><span class="fw-bold" style="margin-left: 6px;">戻る</span>
+        </a>
         @if (auth()->id() == $user->id)
             <div class="card">
                 <div class="card-body">
@@ -36,7 +39,10 @@
             <div>
                 <div class="card">
                     <div class="card-body">
-                        <h1 class="card-title">ユーザー詳細</h1>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h1 class="card-title">ユーザー詳細</h1>
+                            <x-button.follow-button :user="$user" />
+                        </div>
                         <p class="mb-0">【Name】 {{ $user->name }}</p>
                         <p>【Email】 {{ $user->email }}</p>
                     </div>
