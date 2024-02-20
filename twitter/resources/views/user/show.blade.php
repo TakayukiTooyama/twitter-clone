@@ -1,5 +1,8 @@
 <x-layout>
     <div class="container mt-5">
+        <a href={{ route('users.index') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
+            <i class="fas fa-chevron-left"></i><span class="fw-bold" style="margin-left: 6px;">戻る</span>
+        </a>
         @if (auth()->id() == $user->id)
             <div class="card">
                 <div class="card-body">
