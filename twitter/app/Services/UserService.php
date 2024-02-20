@@ -9,16 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    /**
-     * ユーザーIDと認証ユーザーIDが一致するかチェック
-     *
-     * @param int $userId
-     *
-     * @return bool
-     */
-    public function checkAuthUser(int $userId): bool
+    protected $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
-        return $userId === auth()->user()->id;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -28,8 +23,7 @@ class UserService
      */
     public function getAllUser(): Collection
     {
-        $userRepository = new UserRepository();
-        return $userRepository->findAll();
+        return $this->userRepository->findAll();
     }
 
     /**
@@ -41,8 +35,7 @@ class UserService
      */
     public function findUserById(int $userId): ?User
     {
-        $userRepository = new UserRepository();
-        return $userRepository->findById($userId);
+        return $this->userRepository->findById($userId);
     }
 
     /**
@@ -60,8 +53,7 @@ class UserService
         } else {
             unset($userInfo['password']);
         }
-        $userRepository = new UserRepository();
-        $userRepository->update($userId, $userInfo);
+        $this->userRepository->update($userId, $userInfo);
     }
 
     /**
@@ -73,7 +65,6 @@ class UserService
      */
     public function deleteUser(int $userId): void
     {
-        $userRepository = new UserRepository();
-        $userRepository->delete($userId);
+        $this->userRepository->delete($userId);
     }
 }

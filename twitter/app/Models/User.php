@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -51,5 +52,25 @@ class User extends Authenticatable
     public function tweets(): HasMany
     {
         return $this->hasMany(Tweet::class);
+    }
+
+    /**
+     * 自分がフォローしているユーザーの一覧を取得
+     *
+     * @return BelongsToMany
+     */
+    public function followings(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'following_id', 'followed_id');
+    }
+
+    /**
+     * 自分がフォローされているユーザーの一覧を取得
+     *
+     * @return BelongsToMany
+     */
+    public function followers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'following_id');
     }
 }
