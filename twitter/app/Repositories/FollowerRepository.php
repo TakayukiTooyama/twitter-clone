@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Follower;
+use Illuminate\Database\Eloquent\Collection;
 
 class FollowerRepository
 {
@@ -20,6 +21,34 @@ class FollowerRepository
         return Follower::where('following_id', $userId)
             ->where('followed_id', $followedId)
             ->exists();
+    }
+
+    /**
+     * フォロー一覧
+     *
+     * @param int $userId
+     *
+     * @return Collection
+     */
+    public function getFollowing(int $userId): Collection
+    {
+        return Follower::where('following_id', $userId)
+            ->join('users', 'users.id', '=', 'followers.followed_id')
+            ->get();
+    }
+
+    /**
+     * フォロワー一覧
+     *
+     * @param int $userId
+     *
+     * @return Collection
+     */
+    public function getFollowed(int $userId): Collection
+    {
+        return Follower::where('followed_id', $userId)
+            ->join('users', 'users.id', '=', 'followers.following_id')
+            ->get();
     }
 
     /**

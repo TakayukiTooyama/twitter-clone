@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\FollowerService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,28 @@ class FollowerController extends Controller
     public function __construct(FollowerService $followerService)
     {
         $this->followerService = $followerService;
+    }
+
+    /**
+     * フォロー一覧
+     *
+     * @return View
+     */
+    public function following(): View
+    {
+        $followingUsers = $this->followerService->getFollowingUser(Auth::id());
+        return view('user.following', compact('followingUsers'));
+    }
+
+    /**
+     * フォロワー一覧
+     *
+     * @return View
+     */
+    public function followed(): View
+    {
+        $followedUsers = $this->followerService->getFollowedUser(Auth::id());
+        return view('user.followed', compact('followedUsers'));
     }
 
     /**

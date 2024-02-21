@@ -1,14 +1,17 @@
 <x-layout>
     <div class="container-sm px-0 border position-relative">
-        <a href={{ route('tweet.index') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
+        <a href={{ route('home') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
             <i class="fas fa-chevron-left"></i><span class="fw-bold" style="margin-left: 6px;">戻る</span>
         </a>
-        <form method="POST" action={{ route('tweet.update', ['id' => $tweet->id]) }} id="user-form">
+        <form method="POST" action={{ route('tweet.update', ['userId' => auth()->id(), 'tweetId' => $tweet->id]) }}
+            id="user-form">
             @csrf
             @method('PUT')
             <div class="d-flex p-3">
-                <img src={{ asset('image/noicon.png') }}
-                    style="width: 80px; height: 80px; margin-right: 8px; border-radius: 100%;">
+                <a href={{ route('users.show', ['userId' => $tweet->user_id]) }}>
+                    <img src={{ asset('image/noicon.png') }}
+                        style="width: 80px; height: 80px; margin-right: 8px; border-radius: 100%;">
+                </a>
                 <div class="flex-grow-1">
                     <p class="fw-bold m-0 mb-2">{{ $tweet->user->name }}</p>
                     @if (auth()->id() == $tweet->user->id)
@@ -36,7 +39,7 @@
             </div>
         </form>
         <x-modal.success-modal />
-        <x-modal.delete-modal label="ツイート" route="tweet.delete" :id="$tweet->id" />
+        <x-modal.delete-modal label="ツイート" route="tweet.delete" :userId="auth()->id()" :tweetId="$tweet->id" />
     </div>
     @push('body-scripts')
         <script src={{ asset('js/alert.js') }}></script>

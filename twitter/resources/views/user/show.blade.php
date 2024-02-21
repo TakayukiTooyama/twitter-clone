@@ -1,13 +1,21 @@
 <x-layout>
     <div class="container mt-5">
-        <a href={{ route('users.index') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
+        <a href={{ route('home') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
             <i class="fas fa-chevron-left"></i><span class="fw-bold" style="margin-left: 6px;">戻る</span>
         </a>
         @if (auth()->id() == $user->id)
             <div class="card">
                 <div class="card-body">
                     <h1 class="card-title">ユーザー詳細</h1>
-                    <form method="POST" action={{ route('users.update', ['id' => $user->id]) }} id="user-form">
+                    <div class="d-flex gap-2 mb-2">
+                        <a href={{ route('users.following', ['userId' => auth()->id()]) }}
+                            class="btn p-0">{{ $user->followings->count() }}<span class="p-1"
+                                style="color: gray;">Following</span></a>
+                        <a href={{ route('users.followed', ['userId' => auth()->id()]) }}
+                            class="btn p-0">{{ $user->followers->count() }}<span class="p-1"
+                                style="color: gray;">Followers</span></a>
+                    </div>
+                    <form method="POST" action={{ route('users.update', ['userId' => $user->id]) }} id="user-form">
                         @csrf
                         @method('PUT')
 
@@ -34,7 +42,7 @@
                     </form>
                 </div>
             </div>
-            <x-modal.delete-modal label="ユーザー" route="users.delete" :id="$user->id" />
+            <x-modal.delete-modal label="ユーザー" route="users.delete" :userId="$user->id" />
         @else
             <div>
                 <div class="card">
