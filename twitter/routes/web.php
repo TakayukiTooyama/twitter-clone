@@ -28,33 +28,36 @@ Route::middleware('auth')->group(function () {
     Route::get('/', [TweetController::class, 'index'])->name('index');
     Route::get('/home', [TweetController::class, 'index'])->name('home');
 
-    Route::prefix('/{userId}')->name('users.')->group(function () {
-        // ユーザー詳細画面の表示
-        Route::get('/', [UserController::class, 'show'])->name('show');
+    // ユーザー情報関連
+    Route::name('users.')->group(function () {
+        // ユーザー詳細
+        Route::get('/{userId}', [UserController::class, 'show'])->name('show');
         // ユーザー情報更新
-        Route::put('/', [UserController::class, 'update'])->name('update');
+        Route::put('/{userId}', [UserController::class, 'update'])->name('update');
         // ユーザー削除
-        Route::delete('/', [UserController::class, 'delete'])->name('delete');
+        Route::delete('/{userId}', [UserController::class, 'delete'])->name('delete');
 
         // フォロー一覧
-        Route::get('/following', [FollowerController::class, 'following'])->name('following');
+        Route::get('/{userId}/following', [FollowerController::class, 'following'])->name('following');
         // フォロワー一覧
-        Route::get('/followed', [FollowerController::class, 'followed'])->name('followed');
+        Route::get('/{userId}/followed', [FollowerController::class, 'followed'])->name('followed');
         // フォロー
-        Route::put('/follow', [FollowerController::class, 'follow'])->name('follow');
+        Route::put('/{followerId}/follow', [FollowerController::class, 'follow'])->name('follow');
         // フォロー解除
-        Route::delete('/unfollow', [FollowerController::class, 'unfollow'])->name('unfollow');
+        Route::delete('/{followerId}/unfollow', [FollowerController::class, 'unfollow'])->name('unfollow');
     });
 
-    // ツイート投稿
-    Route::post('/{userId}/tweet', [TweetController::class, 'create'])->name('tweet.create');
-
-    Route::prefix('/{userId}/tweet/{tweetId}')->name('tweet.')->group(function () {
+    // ツイート関連
+    Route::prefix('/tweet')->name('tweet.')->group(function () {
+        // ツイート一覧
+        Route::get('/', [TweetController::class, 'index'])->name('index');
+        // ツイート投稿
+        Route::post('/', [TweetController::class, 'store'])->name('store');
         // ツイート詳細
-        Route::get('/', [TweetController::class, 'show'])->name('show');
+        Route::get('/{tweetId}', [TweetController::class, 'show'])->name('show');
         // ツイート更新
-        Route::put('/', [TweetController::class, 'update'])->name('update');
+        Route::put('/{tweetId}', [TweetController::class, 'update'])->name('update');
         // ツイート削除
-        Route::delete('/', [TweetController::class, 'delete'])->name('delete');
+        Route::delete('/{tweetId}', [TweetController::class, 'delete'])->name('delete');
     });
 });

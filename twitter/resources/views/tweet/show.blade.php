@@ -3,8 +3,7 @@
         <a href={{ route('home') }} class="opacity-50 d-inline-block px-3 py-2 text-reset text-decoration-none">
             <i class="fas fa-chevron-left"></i><span class="fw-bold" style="margin-left: 6px;">戻る</span>
         </a>
-        <form method="POST" action={{ route('tweet.update', ['userId' => auth()->id(), 'tweetId' => $tweet->id]) }}
-            id="user-form">
+        <form method="POST" action={{ route('tweet.update', ['tweetId' => $tweet->id]) }} id="user-form">
             @csrf
             @method('PUT')
             <div class="d-flex p-3">

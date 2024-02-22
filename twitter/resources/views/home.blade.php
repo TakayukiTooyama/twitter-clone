@@ -6,8 +6,7 @@
                 <img src={{ asset('image/noicon.png') }}
                     style="width: 80px; height: 80px; margin-right: 8px; border-radius: 100%;">
             </a>
-            <form id="tweetForm" method="POST" action={{ route('tweet.create', ['userId' => auth()->id()]) }}
-                class="flex-grow-1">
+            <form id="tweetForm" method="POST" action={{ route('tweet.store') }} class="flex-grow-1">
                 @csrf
                 <textarea class="form-control @error('content') is-invalid @enderror" name="content" id="content"
                     style="min-height: 140px; margin-bottom: 6px;" required></textarea>
@@ -19,8 +18,7 @@
         </div>
         <div class="border border-bottom-0">
             @foreach ($tweets as $tweet)
-                <div class="card"
-                    onclick="location.href='{{ route('tweet.show', ['userId' => $tweet->user_id, 'tweetId' => $tweet->id]) }}'"
+                <div class="card" onclick="location.href='{{ route('tweet.show', ['tweetId' => $tweet->id]) }}'"
                     style="cursor: pointer;">
                     <div class="card-body d-flex p-3">
                         <div onclick="event.stopPropagation();">
@@ -40,7 +38,7 @@
 
         {{-- <div class="border border-bottom-0">
             @foreach ($tweets as $tweet)
-                <a href={{ route('tweet.show', ['userId' => auth()->id(), 'tweetId' => $tweet->id]) }}
+                <a href={{ route('tweet.show', ['tweetId' => $tweet->id]) }}
                     class="text-reset text-decoration-none">
                     <div class="d-flex border-bottom p-3 ">
                         <a href={{ route('users.show', ['userId' => $tweet->user_id]) }}

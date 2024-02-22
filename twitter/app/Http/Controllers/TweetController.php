@@ -33,12 +33,11 @@ class TweetController extends Controller
     /**
      * ツイートの詳細
      *
-     * @param int $userId
      * @param int $tweetId
      *
      * @return View|RedirectResponse
      */
-    public function show(int $userId, int $tweetId): View|RedirectResponse
+    public function show(int $tweetId): View|RedirectResponse
     {
 
         $tweet = $this->tweetService->findTweetById($tweetId);
@@ -56,7 +55,7 @@ class TweetController extends Controller
      *
      * @return RedirectResponse
      */
-    public function create(TweetRequest $request): RedirectResponse
+    public function store(TweetRequest $request): RedirectResponse
     {
         try {
             $content = $request->validated()['content'];
@@ -76,16 +75,14 @@ class TweetController extends Controller
      *
      * @return RedirectResponse
      */
-    public function update(TweetRequest $request, int $userId, int $tweetId): RedirectResponse
+    public function update(TweetRequest $request, int $tweetId): RedirectResponse
     {
         try {
             $tweet = $this->tweetService->findTweetById($tweetId);
             if (!$tweet) {
                 return back()->with('error', '更新するツイートが存在しません。');
             }
-            if ($userId !== Auth::id()) {
-                return back()->with('error', '他のユーザーのツイートは更新できません。');
-            }
+            $this->authorize('update', $tweet);
             $content = $request->validated()['content'];
             $this->tweetService->updateTweet($tweetId, $content);
             return back()->with('success', 'ツイートが更新されました');
@@ -100,20 +97,17 @@ class TweetController extends Controller
     /**
      * ツイートの削除
      *
-     * @param int $userId
      * @param int $tweetId
      *
      * @return RedirectResponse
-     */ public function delete(int $userId, int $tweetId): RedirectResponse
+     */ public function delete(int $tweetId): RedirectResponse
     {
         try {
             $tweet = $this->tweetService->findTweetById($tweetId);
             if (!$tweet) {
                 return back()->with('error', '削除するツイートが存在しません。');
             }
-            if ($userId !== Auth::id()) {
-                return back()->with('error', '他のユーザーのツイートは削除できません。');
-            }
+            $this->authorize('delete', $tweet);
             $this->tweetService->deleteTweet($tweetId);
             return redirect()->route('home')->with('success', 'ツイートを削除しました。');
         } catch (AuthorizationException $e) {
